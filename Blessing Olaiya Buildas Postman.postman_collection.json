@@ -1,0 +1,406 @@
+{
+	"info": {
+		"_postman_id": "5caa050a-0ba1-4fcb-bfb6-fa4029830037",
+		"name": "Blessing Olaiya Buildas Postman",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8340674",
+		"_collection_link": "https://www.postman.com/cloudy-desert-888452/workspace/qacetechassessment/collection/8340674-5caa050a-0ba1-4fcb-bfb6-fa4029830037?action=share&source=collection_link&creator=8340674"
+	},
+	"item": [
+		{
+			"name": "Get Pet by ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"const jsonData = pm.response.json();",
+							"",
+							"pm.test(\"ID is 1001\", function () {",
+							"    pm.expect(jsonData.id).to.eql(1001);",
+							"});",
+							"",
+							"pm.test(\"Category ID is 1 and name is 'Dogs'\", function () {",
+							"    pm.expect(jsonData.category.id).to.eql(1);",
+							"    pm.expect(jsonData.category.name).to.eql(\"Dogs\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"PhotoUrls contains 'string'\", function () {",
+							"    pm.expect(jsonData.photoUrls).to.include(\"string\");",
+							"});",
+							"",
+							"pm.test(\"Tags contains object with id 1 and name 'playful'\", function () {",
+							"    pm.expect(jsonData.tags[0].id).to.eql(1);",
+							"    pm.expect(jsonData.tags[0].name).to.eql(\"playful\");",
+							"});",
+							"",
+							"pm.test(\"Status is 'sold'\", function () {",
+							"    pm.expect(jsonData.status).to.not.be.empty;",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet/1001",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet",
+						"1001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse the response",
+							"let jsonData = pm.response.json();",
+							"const requestData = JSON.parse(pm.request.body);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response field 'code' is 200\", function () {",
+							"    pm.expect(jsonData.code).to.eql(200);",
+							"});",
+							"",
+							"pm.test(\"Response field 'type' is 'unknown'\", function () {",
+							"    pm.expect(jsonData.type).to.eql(\"unknown\");",
+							"});",
+							"",
+							"pm.test(\"Response field 'message' is '486'\", function () {",
+							"    pm.expect(jsonData.message).to.contains(requestData.id);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": {{$randomInt}},\n  \"username\": \"{{$randomUserName}}\",\n  \"firstName\": \"{{$randomFirstName}}\",\n  \"lastName\": \"{{$randomLastName}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"password\": \"Password@1\",\n  \"phone\": \"{{$randomPhoneNumber}}\",\n  \"userStatus\": 0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/user",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"let response = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response has expected structure\", function () {",
+							"    pm.expect(response).to.have.property(\"code\", 200);",
+							"    pm.expect(response).to.have.property(\"type\", \"unknown\");",
+							"    pm.expect(response).to.have.property(\"message\").contains(\"logged in user session:\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/user/login?username=Darmolyn&password=Password%401",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"user",
+						"login"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "Darmolyn"
+						},
+						{
+							"key": "password",
+							"value": "Password%401"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Log Out",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response has all expected fields\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property(\"code\", 200);",
+							"    pm.expect(jsonData).to.have.property(\"type\", \"unknown\");",
+							"    pm.expect(jsonData).to.have.property(\"message\", \"ok\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/user/logout",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"user",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User By Username",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"let response = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"ID is 24\", function () {",
+							"    pm.expect(response.id).to.not.be.NaN;",
+							"});",
+							"",
+							"pm.test(\"Username is Darmolyn\", function () {",
+							"    pm.expect(response.username).to.eql(\"Darmolyn\");",
+							"});",
+							"",
+							"pm.test(\"First name is Olaiya\", function () {",
+							"    pm.expect(response.firstName).to.eql(\"Olaiya\");",
+							"});",
+							"",
+							"pm.test(\"Last name is Blessing\", function () {",
+							"    pm.expect(response.lastName).to.eql(\"Blessing\");",
+							"});",
+							"",
+							"pm.test(\"Email is correct\", function () {",
+							"    pm.expect(response.email).to.eql(\"olofinblessing@gmail.com\");",
+							"});",
+							"",
+							"pm.test(\"Password is correct\", function () {",
+							"    pm.expect(response.password).to.eql(\"Password@1\");",
+							"});",
+							"",
+							"pm.test(\"Phone number is correct\", function () {",
+							"    pm.expect(response.phone).to.eql(\"09034121235\");",
+							"});",
+							"",
+							"pm.test(\"User status is 1\", function () {",
+							"    pm.expect(response.userStatus).to.eql(1);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/user/Darmolyn",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"user",
+						"Darmolyn"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Pet By Status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseData = pm.response.json();",
+							"",
+							"responseData.forEach(pet => {",
+							"    console.log(`Pet Name: ${pet.name}, ID: ${pet.id}`);",
+							"});",
+							"",
+							"responseData.forEach(pet => {",
+							"    pm.test(`Pet ${pet.name} has status 'pending'`, function () {",
+							"        pm.expect(pet.status).to.eql(\"pending\");",
+							"    });",
+							"});",
+							"",
+							"let hasMax = responseData.some(pet => pet.name === \"Max\");",
+							"",
+							"pm.test(\"At least one pet is named Max\", function () {",
+							"    pm.expect(hasMax).to.be.true;",
+							"});",
+							"",
+							"let petIds = responseData.map(pet => pet.id);",
+							"pm.collectionVariables.set(\"allPetIds\", JSON.stringify(petIds));",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet/findByStatus?status=pending",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet",
+						"findByStatus"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "pending"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "allPetIds",
+			"value": ""
+		}
+	]
+}
