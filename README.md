@@ -5,18 +5,11 @@ This repository contains a set of automated API tests written using Postman and 
 Prerequisites 
 
 Ensure the following tools are installed on your system: 
+ 
 
-Tool 
+Node.js v18 or above 
 
-Recommended Version 
-
-Node.js 
-
-v18 or above 
-
-Postman 
-
-Latest 
+Postman Latest 
 
  
 
@@ -79,4 +72,3 @@ Click the collection name → right click on it and select Run.
 
 Configure run settings (e.g., iteration count, environment, etc.) and click Run. 
 
- # Postman GitHub Actions
