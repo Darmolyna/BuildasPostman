@@ -1,74 +1,116 @@
-This repository contains a set of automated API tests written using Postman and can be executed via the CLI (Newman) or directly within the Postman app. 
+# BuildasPostman
+## API Test Automation Using Postman & Newman
 
- 
+This repository contains a set of automated API tests written using **Postman**. These tests can be executed either via the **Postman** application or from the command line using **Newman**.
 
-Prerequisites 
+---
 
-Ensure the following tools are installed on your system: 
- 
+## Prerequisites
 
-Node.js v18 or above 
+Ensure the following tools are installed on your system:
 
-Postman Latest 
+- **Node.js** v18 or above  
+- **Postman** (Latest version)
 
- 
+---
 
-Getting Started 
+## Getting Started
 
-1. Create and Navigate to a Project Folder 
+### 1. Create and Navigate to a Project Folder
 
-Create a folder where you want to install this project. Then open your terminal and navigate into it. 
+Open your terminal and run:
 
-mkdir my-postman-project 
-cd my-postman-project 
- 
+```bash
+mkdir my-postman-project
+cd my-postman-project
+```
 
- 
+### 2. Clone the Repository
 
-2. Clone the Repository 
+Clone this GitHub repository into the folder and navigate into the cloned directory:
 
-Clone this GitHub repository into the folder and navigate into the cloned directory: 
+```bash
+git clone https://github.com/Darmolyna/BuildasPostman.git
+cd BuildasPostman
+```
 
-git clone https://github.com/Darmolyna/BuildasPostman.git 
-cd BuildasPostman 
- 
+---
 
- 
+## Run API Tests
 
-3. Run API Tests from the CLI (Newman) 
+### Option 1: Run Tests from the CLI (Using Newman)
 
-Use the following command to run the tests and generate an HTML report: 
+Use the following command to run the tests and generate an HTML report:
 
-npx newman run "path/to/your/postman_collection.json" \ 
-  --reporters cli,html \ 
-  --reporter-html-export newman-reports/report.html 
- 
+```bash
+npx newman run "path/to/your/postman_collection.json"   --reporters cli,html   --reporter-html-export newman-reports/report.html
+```
 
-⚠️ Note: 
- Replace path/to/your/postman_collection.json with the actual path to your Postman collection file 
+> Replace `path/to/your/postman_collection.json` with the actual path to your Postman collection file.
 
-Example for macOS: 
+**Example for macOS:**
 
-npx newman run "/Users/Blessing/Downloads/Blessing Olaiya Buildas Postman.postman_collection.json" \ 
-  --reporters cli,html \ 
-  --reporter-html-export /Users/Blessing/Downloads/newman-reports/reports.html 
- 
+```bash
+npx newman run "/Users/Blessing/Downloads/BuildasPostman.postman_collection.json"   --reporters cli,html   --reporter-html-export /Users/Blessing/Downloads/newman-reports/report.html
+```
 
- 
+### Option 2: Run Tests in the Postman App
 
-4. Run Tests in Postman UI 
+1. Open the **Postman** application.
+2. Click **Import** (top left).
+3. Select the `BuildasPostman.postman_collection.json` file you cloned from GitHub.
+4. Go to the **Collections** tab.
+5. Right-click the imported collection and select **Run**.
+6. Configure the run settings (e.g., iteration count, environment) and click **Run**.
 
-You can also run the tests directly within Postman: 
+---
 
-Open the Postman app. 
+##  Option 3: Run Postman Tests in GitHub Actions CI
 
-Click Import (top left). 
+### Step 1: Remove Existing Git History
 
-Choose the BuildasPostman.postman_collection.json file you cloned from GitHub. 
+To remove the link to the original GitHub repo:
 
-Once imported, go to the Collections tab. 
+```bash
+rm -rf .git
+```
 
-Click the collection name → right click on it and select Run. 
+### Step 2: Create a New GitHub Repository
 
-Configure run settings (e.g., iteration count, environment, etc.) and click Run. 
+- Go to [GitHub](https://github.com)
+- Click the `+` icon (top right) → **New repository**
+- Name it (e.g., `my-postman-tests`)
+- Click **Create repository**
+- **DO NOT** initialize with a README or `.gitignore`
 
+### Step 3: Push Project to New Repo
+
+```bash
+git init
+git add .
+git commit -m "Initial project commit"
+```
+
+### Step 4: Add Remote and Push
+
+```bash
+git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
+git branch -M main
+git push -u origin main
+```
+
+> Replace `YOUR_USERNAME` and `YOUR_REPO_NAME` with your actual GitHub username and new repository name.
+
+### Step 5: Verify GitHub Actions CI is Working
+
+- Go to your new GitHub repository in the browser.
+- Click the **Actions** tab at the top.
+- You should see a workflow run triggered by your recent push.
+
+Click on the workflow name to:
+
+- View job steps  
+- Check if Postman tests passed or failed  
+- Locate the **Upload HTML Report as Artifact** section and click the provided link to download the test report.
+
+---
